@@ -199,6 +199,18 @@
   border-color: #8bc34a;
 }
 
+.read-more-link {
+  text-decoration: none;
+}
+
+.read-more-link:hover {
+  text-decoration: none;
+}
+
+.read-more-link .read-more-btn {
+  width: 100%;
+}
+
 /* Адаптация для мобильных устройств */
 @media (max-width: 768px) {
   .news-grid {
@@ -217,3 +229,4 @@
     gap: 5px;
   }
 }
+
