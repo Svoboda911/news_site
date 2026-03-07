@@ -2,60 +2,55 @@ import React from 'react';
 import './Footer.css';
 
 const Footer = () => {
-  const currentYear = new Date().getFullYear();
-
-  const footerLinks = {
-    'Новости': ['Политика', 'Экономика', 'Технологии', 'Спорт', 'Культура'],
-    'Ресурсы': ['О нас', 'Контакты', 'Реклама', 'Вакансии', 'Правила'],
-    'Социальные сети': ['Facebook', 'Twitter', 'Instagram', 'Telegram', 'YouTube']
-  };
-
   return (
     <footer className="footer">
-      <div className="footer-container">
-        <div className="footer-grid">
+      <div className="container">
+        <div className="footer-content">
           <div className="footer-section">
-            <h3 className="footer-title">NewsPortal</h3>
-            <p className="footer-description">
-              Ваш надежный источник актуальных новостей со всего мира. 
-              Мы предоставляем качественную и проверенную информацию 24/7.
+            <h3 className="footer-title">О нас</h3>
+            <p className="footer-text">
+              Зеленые новости - ваш источник актуальной информации с фокусом на экологию и устойчивое развитие.
             </p>
-            <div className="social-links">
-              <a href="#" className="social-link">📱</a>
-              <a href="#" className="social-link">💬</a>
-              <a href="#" className="social-link">📧</a>
-              <a href="#" className="social-link">📺</a>
-            </div>
           </div>
 
-          {Object.entries(footerLinks).map(([category, links]) => (
-            <div key={category} className="footer-section">
-              <h4 className="footer-subtitle">{category}</h4>
-              <ul className="footer-links">
-                {links.map(link => (
-                  <li key={link} className="footer-link-item">
-                    <a href="#" className="footer-link">{link}</a>
-                  </li>
-                ))}
-              </ul>
+          <div className="footer-section">
+            <h3 className="footer-title">Разделы</h3>
+            <ul className="footer-links">
+              <li><a href="#">Политика</a></li>
+              <li><a href="#">Экономика</a></li>
+              <li><a href="#">Технологии</a></li>
+              <li><a href="#">Спорт</a></li>
+              <li><a href="#">Культура</a></li>
+            </ul>
+          </div>
+
+          <div className="footer-section">
+            <h3 className="footer-title">Контакты</h3>
+            <ul className="footer-contacts">
+              <li>📧 info@greenews.ru</li>
+              <li>📞 +7 (123) 456-78-90</li>
+              <li>📍 Москва, ул. Зеленая, 1</li>
+            </ul>
+          </div>
+
+          <div className="footer-section">
+            <h3 className="footer-title">Подписка</h3>
+            <div className="subscribe-form">
+              <input
+                type="email"
+                placeholder="Ваш email"
+                className="subscribe-input"
+              />
+              <button className="subscribe-btn">
+                Подписаться
+              </button>
             </div>
-          ))}
+          </div>
         </div>
 
         <div className="footer-bottom">
-          <div className="footer-info">
-            <span>© {currentYear} NewsPortal. Все права защищены.</span>
-            <span className="footer-separator">|</span>
-            <span>Разработано с ❤️ для новостей</span>
-          </div>
-          
-          <div className="footer-legal">
-            <a href="#" className="legal-link">Политика конфиденциальности</a>
-            <span className="footer-separator">|</span>
-            <a href="#" className="legal-link">Условия использования</a>
-            <span className="footer-separator">|</span>
-            <a href="#" className="legal-link">Карта сайта</a>
-          </div>
+          <p>&copy; 2024 Зеленые новости. Все права защищены.</p>
+          <p>Сделано с ❤️ для экологии</p>
         </div>
       </div>
     </footer>

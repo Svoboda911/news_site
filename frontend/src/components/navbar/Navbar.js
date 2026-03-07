@@ -2,53 +2,32 @@ import React, { useState } from 'react';
 import './Navbar.css';
 
 const Navbar = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeCategory, setActiveCategory] = useState('all');
 
   const categories = [
-    { id: 'all', name: 'Все новости', icon: '📰' },
-    { id: 'politics', name: 'Политика', icon: '🏛️' },
-    { id: 'economics', name: 'Экономика', icon: '📊' },
-    { id: 'technology', name: 'Технологии', icon: '💻' },
-    { id: 'science', name: 'Наука', icon: '🔬' },
-    { id: 'culture', name: 'Культура', icon: '🎭' },
-    { id: 'sports', name: 'Спорт', icon: '⚽' },
-    { id: 'world', name: 'В мире', icon: '🌍' }
+    'Все новости',
+    'Политика',
+    'Экономика',
+    'Технологии',
+    'Спорт',
+    'Культура'
   ];
-
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
 
   return (
     <nav className="navbar">
-      <div className="nav-container">
-        <button className="mobile-menu-btn" onClick={toggleMenu}>
-          <span className="hamburger-icon">☰</span>
-        </button>
-        
-        <ul className={`nav-menu ${isMenuOpen ? 'active' : ''}`}>
-          {categories.map(category => (
-            <li key={category.id} className="nav-item">
-              <a 
-                href={`#${category.id}`}
-                className={`nav-link ${activeCategory === category.id ? 'active' : ''}`}
-                onClick={(e) => {
-                  e.preventDefault();
-                  setActiveCategory(category.id);
-                  setIsMenuOpen(false);
-                }}
+      <div className="container">
+        <ul className="nav-menu">
+          {categories.map((category, index) => (
+            <li key={index} className="nav-item">
+              <button
+                className={`nav-link ${activeCategory === category.toLowerCase() ? 'active' : ''}`}
+                onClick={() => setActiveCategory(category.toLowerCase())}
               >
-                <span className="nav-icon">{category.icon}</span>
-                <span className="nav-text">{category.name}</span>
-              </a>
+                {category}
+              </button>
             </li>
           ))}
         </ul>
-        
-        <div className="nav-right">
-          <button className="subscribe-btn">Подписаться</button>
-        </div>
       </div>
     </nav>
   );

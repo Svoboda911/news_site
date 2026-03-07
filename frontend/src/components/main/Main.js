@@ -1,201 +1,150 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './Main.css';
 
 const Main = () => {
-  const [news, setNews] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [news] = useState([
+    {
+      id: 1,
+      title: 'Новый экологичный проект запущен в городе',
+      category: 'Политика',
+      date: '15 марта 2024',
+      description: 'Внедрение зеленых технологий в городскую инфраструктуру позволит снизить выбросы углекислого газа на 30%.',
+      image: null
+    },
+    {
+      id: 2,
+      title: 'Экономика: рост инвестиций в зеленую энергетику',
+      category: 'Экономика',
+      date: '15 марта 2024',
+      description: 'Инвестиции в возобновляемую энергетику выросли на 45% по сравнению с прошлым годом.',
+      image: null
+    },
+    {
+      id: 3,
+      title: 'Технологии: создан новый эко-материал',
+      category: 'Технологии',
+      date: '14 марта 2024',
+      description: 'Ученые разработали биоразлагаемый материал, который может заменить пластик.',
+      image: null
+    },
+    {
+      id: 4,
+      title: 'Спорт: экологический марафон собрал тысячи участников',
+      category: 'Спорт',
+      date: '14 марта 2024',
+      description: 'Ежегодный зеленый марафон прошел в центральном парке города.',
+      image: null
+    },
+    {
+      id: 5,
+      title: 'Культура: выставка экологического искусства',
+      category: 'Культура',
+      date: '13 марта 2024',
+      description: 'Художники представили работы из переработанных материалов.',
+      image: null
+    },
+    {
+      id: 6,
+      title: 'В городе высажено 1000 новых деревьев',
+      category: 'Политика',
+      date: '13 марта 2024',
+      description: 'Масштабная акция по озеленению прошла во всех районах города.',
+      image: null
+    }
+  ]);
+
   const [selectedCategory, setSelectedCategory] = useState('all');
-  const [currentPage, setCurrentPage] = useState(1);
-  const newsPerPage = 9;
+  const [searchQuery, setSearchQuery] = useState('');
 
-  // Mock data для демонстрации
-  useEffect(() => {
-    const fetchNews = async () => {
-      try {
-        setLoading(true);
-        // Имитация загрузки данных
-        const mockNews = [
-          {
-            id: 1,
-            title: "Новый прорыв в области искусственного интеллекта",
-            description: "Ученые представили новую модель AI, способную решать сложные задачи...",
-            category: "technology",
-            image: "https://via.placeholder.com/300x200",
-            date: "2024-01-15",
-            author: "Иван Петров",
-            views: 1234
-          },
-          {
-            id: 2,
-            title: "Международный саммит по климату начался в Женеве",
-            description: "Лидеры стран обсуждают меры по борьбе с изменением климата...",
-            category: "world",
-            image: "https://via.placeholder.com/300x200",
-            date: "2024-01-14",
-            author: "Анна Смирнова",
-            views: 892
-          },
-          {
-            id: 3,
-            title: "Рынок акций достиг исторического максимума",
-            description: "Инвесторы оптимистично настроены относительно экономического роста...",
-            category: "economics",
-            image: "https://via.placeholder.com/300x200",
-            date: "2024-01-13",
-            author: "Михаил Сидоров",
-            views: 2156
-          },
-          {
-            id: 4,
-            title: "Открытие новой галереи современного искусства",
-            description: "В центре города открылась выставка работ молодых художников...",
-            category: "culture",
-            image: "https://via.placeholder.com/300x200",
-            date: "2024-01-12",
-            author: "Елена Волкова",
-            views: 567
-          },
-          {
-            id: 5,
-            title: "Сборная страны выиграла чемпионат мира",
-            description: "В финале наши спортсмены одержали убедительную победу...",
-            category: "sports",
-            image: "https://via.placeholder.com/300x200",
-            date: "2024-01-11",
-            author: "Алексей Козлов",
-            views: 3421
-          },
-          {
-            id: 6,
-            title: "Новые законы в сфере образования",
-            description: "Парламент принял пакет законов о модернизации образования...",
-            category: "politics",
-            image: "https://via.placeholder.com/300x200",
-            date: "2024-01-10",
-            author: "Дмитрий Новиков",
-            views: 1456
-          }
-        ];
-
-        setTimeout(() => {
-          setNews(mockNews);
-          setLoading(false);
-        }, 1000);
-      } catch (err) {
-        setError('Ошибка при загрузке новостей');
-        setLoading(false);
-      }
-    };
-
-    fetchNews();
-  }, []);
-
-  const filteredNews = selectedCategory === 'all' 
-    ? news 
-    : news.filter(item => item.category === selectedCategory);
-
-  const indexOfLastNews = currentPage * newsPerPage;
-  const indexOfFirstNews = indexOfLastNews - newsPerPage;
-  const currentNews = filteredNews.slice(indexOfFirstNews, indexOfLastNews);
-  const totalPages = Math.ceil(filteredNews.length / newsPerPage);
-
-  const handleCategoryChange = (category) => {
-    setSelectedCategory(category);
-    setCurrentPage(1);
-  };
-
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  if (loading) return <div className="loading">Загрузка новостей...</div>;
-  if (error) return <div className="error">{error}</div>;
+  const filteredNews = news.filter(item => {
+    const matchesCategory = selectedCategory === 'all' || 
+      item.category.toLowerCase() === selectedCategory.toLowerCase();
+    const matchesSearch = item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.description.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
 
   return (
     <main className="main">
-      <div className="main-container">
-        <div className="main-header">
-          <h2 className="main-title">
-            {selectedCategory === 'all' ? 'Все новости' : `Новости ${selectedCategory}`}
-          </h2>
-          <div className="category-tabs">
-            <button 
-              className={`category-tab ${selectedCategory === 'all' ? 'active' : ''}`}
-              onClick={() => handleCategoryChange('all')}
-            >
-              Все
-            </button>
-            <button 
-              className={`category-tab ${selectedCategory === 'technology' ? 'active' : ''}`}
-              onClick={() => handleCategoryChange('technology')}
-            >
-              Технологии
-            </button>
-            <button 
-              className={`category-tab ${selectedCategory === 'world' ? 'active' : ''}`}
-              onClick={() => handleCategoryChange('world')}
-            >
-              В мире
-            </button>
-            <button 
-              className={`category-tab ${selectedCategory === 'sports' ? 'active' : ''}`}
-              onClick={() => handleCategoryChange('sports')}
-            >
-              Спорт
-            </button>
-          </div>
+      <div className="container">
+        <div className="search-section">
+          <input
+            type="text"
+            className="search-input"
+            placeholder="Поиск новостей..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          <button className="search-button">
+            Поиск
+          </button>
+        </div>
+
+        <div className="category-buttons">
+          <button
+            className={`category-btn ${selectedCategory === 'all' ? 'active' : ''}`}
+            onClick={() => setSelectedCategory('all')}
+          >
+            Все
+          </button>
+          <button
+            className={`category-btn ${selectedCategory === 'политика' ? 'active' : ''}`}
+            onClick={() => setSelectedCategory('политика')}
+          >
+            Политика
+          </button>
+          <button
+            className={`category-btn ${selectedCategory === 'экономика' ? 'active' : ''}`}
+            onClick={() => setSelectedCategory('экономика')}
+          >
+            Экономика
+          </button>
+          <button
+            className={`category-btn ${selectedCategory === 'технологии' ? 'active' : ''}`}
+            onClick={() => setSelectedCategory('технологии')}
+          >
+            Технологии
+          </button>
+          <button
+            className={`category-btn ${selectedCategory === 'спорт' ? 'active' : ''}`}
+            onClick={() => setSelectedCategory('спорт')}
+          >
+            Спорт
+          </button>
+          <button
+            className={`category-btn ${selectedCategory === 'культура' ? 'active' : ''}`}
+            onClick={() => setSelectedCategory('культура')}
+          >
+            Культура
+          </button>
         </div>
 
         <div className="news-grid">
-          {currentNews.map(newsItem => (
-            <article key={newsItem.id} className="news-card">
-              <div className="news-card-image">
-                <img src={newsItem.image} alt={newsItem.title} />
-                <span className="news-category-badge">{newsItem.category}</span>
+          {filteredNews.map(item => (
+            <article key={item.id} className="news-card">
+              <div className="news-image">
+                {item.image ? (
+                  <img src={item.image} alt={item.title} />
+                ) : (
+                  <div className="image-placeholder">
+                    📰
+                  </div>
+                )}
               </div>
-              <div className="news-card-content">
-                <h3 className="news-card-title">{newsItem.title}</h3>
-                <p className="news-card-description">{newsItem.description}</p>
-                <div className="news-card-meta">
-                  <span className="news-date">{newsItem.date}</span>
-                  <span className="news-author">{newsItem.author}</span>
-                  <span className="news-views">👁 {newsItem.views}</span>
+              <div className="news-content">
+                <div className="news-meta">
+                  <span className="news-category">{item.category}</span>
+                  <span className="news-date">{item.date}</span>
                 </div>
-                <button className="read-more-btn">Читать далее</button>
+                <h2 className="news-title">{item.title}</h2>
+                <p className="news-description">{item.description}</p>
+                <button className="read-more-btn">
+                  Читать далее
+                </button>
               </div>
             </article>
           ))}
         </div>
-
-        {totalPages > 1 && (
-          <div className="pagination">
-            <button 
-              className="pagination-btn"
-              onClick={() => handlePageChange(currentPage - 1)}
-              disabled={currentPage === 1}
-            >
-              ←
-            </button>
-            {[...Array(totalPages)].map((_, index) => (
-              <button
-                key={index + 1}
-                className={`pagination-btn ${currentPage === index + 1 ? 'active' : ''}`}
-                onClick={() => handlePageChange(index + 1)}
-              >
-                {index + 1}
-              </button>
-            ))}
-            <button 
-              className="pagination-btn"
-              onClick={() => handlePageChange(currentPage + 1)}
-              disabled={currentPage === totalPages}
-            >
-              →
-            </button>
-          </div>
-        )}
       </div>
     </main>
   );
