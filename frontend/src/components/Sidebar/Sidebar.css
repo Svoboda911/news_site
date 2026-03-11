@@ -1,0 +1,133 @@
+.sidebar {
+    width: 320px;
+    flex-shrink: 0;
+}
+
+.sidebar-section {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e6f0ff;
+}
+
+.sidebar-title {
+    color: #1e3c72;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #1e3c72;
+}
+
+.sidebar-list {
+    list-style: none;
+}
+
+.sidebar-item {
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e6f0ff;
+}
+
+.sidebar-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.sidebar-link {
+    color: #1e3c72;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    transition: color 0.3s;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.sidebar-link:hover {
+    color: #2a4f8c;
+    text-decoration: underline;
+}
+
+.sidebar-views {
+    color: #888;
+    font-size: 12px;
+}
+
+/* Рекомендуемые материалы */
+.recommended-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.recommended-item {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.recommended-image {
+    width: 60px;
+    height: 60px;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.recommended-content {
+    flex: 1;
+}
+
+.recommended-link {
+    color: #1e3c72;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.4;
+    display: block;
+    margin-bottom: 4px;
+    transition: color 0.3s;
+}
+
+.recommended-link:hover {
+    color: #2a4f8c;
+    text-decoration: underline;
+}
+
+.recommended-time {
+    color: #888;
+    font-size: 11px;
+}
+
+/* Теги */
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.tag {
+    background: #f0f8ff;
+    color: #1e3c72;
+    text-decoration: none;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    transition: all 0.3s;
+    border: 1px solid #e6f0ff;
+}
+
+.tag:hover {
+    background: #1e3c72;
+    color: white;
+    border-color: #1e3c72;
+}
+
+@media (max-width: 1024px) {
+    .sidebar {
+        width: 100%;
+    }
+}
